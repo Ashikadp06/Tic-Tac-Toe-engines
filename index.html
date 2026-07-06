@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Tic-Tac-Toe Pro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Top Control Bar -->
+    <header class="control-bar">
+        <div class="brand">TicTacToe<span class="accent">.pro</span></div>
+        <div class="settings-group">
+            <button id="theme-toggle" class="icon-btn" title="Toggle Theme" aria-label="Toggle Theme">🌙</button>
+            <button id="sound-toggle" class="icon-btn" title="Mute/Unmute" aria-label="Toggle Sound">🔊</button>
+        </div>
+    </header>
+
+    <main class="app-container">
+        <!-- Settings & Game Mode Selectors -->
+        <section class="menu-card">
+            <div class="setting-row">
+                <label for="mode-select">Game Mode:</label>
+                <select id="mode-select" class="styled-select">
+                    <option value="ai">vs Unbeatable AI (Minimax)</option>
+                    <option value="pvp">Local Two-Player</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- Scoreboard Component -->
+        <section class="scoreboard">
+            <div class="score-tile" id="tile-x">
+                <span class="label">Player X</span>
+                <span class="score-val" id="score-x">0</span>
+            </div>
+            <div class="score-tile" id="tile-ties">
+                <span class="label">Ties</span>
+                <span class="score-val" id="score-ties">0</span>
+            </div>
+            <div class="score-tile" id="tile-o">
+                <span class="label">Player O</span>
+                <span class="score-val" id="score-o">0</span>
+            </div>
+        </section>
+
+        <!-- Dynamic Announcement Container -->
+        <div class="msg-container hide" id="msg-banner">
+            <p id="msg">Your Turn</p>
+            <button id="new-btn" class="primary-btn">Next Round</button>
+        </div>
+
+        <!-- Matrix Game Board Layout -->
+        <section class="container">
+            <div class="game" id="board-grid">
+                <button class="box" data-index="0"></button>
+                <button class="box" data-index="1"></button>
+                <button class="box" data-index="2"></button>
+                <button class="box" data-index="3"></button>
+                <button class="box" data-index="4"></button>
+                <button class="box" data-index="5"></button>
+                <button class="box" data-index="6"></button>
+                <button class="box" data-index="7"></button>
+                <button class="box" data-index="8"></button>
+                <!-- SVG layer handles the clean dynamic winning strike line -->
+                <svg class="win-line-svg" id="win-svg">
+                    <line id="strike-line" x1="0" y1="0" x2="0" y2="0" />
+                </svg>
+            </div>
+        </section>
+       
+
+<!-- NEW: Real-time Interactive Control Panel -->
+<section class="menu-card matchmaking-panel" style="margin-top: 1rem; text-align: center;">
+    <button id="find-match-btn" class="primary-btn" style="width: 100%; margin-bottom: 0.75rem; background-color: #1e293b; border: 1px solid #475569;">Find Match</button>
+    
+    <div class="timer-display" style="font-weight: 700; color: var(--text-primary);">
+        <span style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 0.25rem;">Time Left:</span>
+        <span id="countdown-clock" style="font-size: 1.75rem; font-family: monospace; letter-spacing: 1px;">00:10</span>
+    </div>
+</section>
+
+        <!-- Game State Management Footers -->
+        <footer class="action-footer">
+            <button id="reset-btn" class="secondary-btn">Reset All Stats</button>
+        </footer>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

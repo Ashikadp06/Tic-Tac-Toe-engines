@@ -1,0 +1,247 @@
+/* --- Tokenized Theme Variables --- */
+:root[data-theme="dark"] {
+    --bg-main: #0f172a;
+    --bg-card: #1e293b;
+    --bg-box: #334155;
+    --bg-box-hover: #475569;
+    --text-primary: #f8fafc;
+    --text-muted: #94a3b8;
+    --color-x: #ef4444;
+    --color-o: #3b82f6;
+    --color-accent: #10b981;
+    --shadow-main: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+:root[data-theme="light"] {
+    --bg-main: #f8fafc;
+    --bg-card: #ffffff;
+    --bg-box: #e2e8f0;
+    --bg-box-hover: #cbd5e1;
+    --text-primary: #0f172a;
+    --text-muted: #64748b;
+    --color-x: #dc2626;
+    --color-o: #2563eb;
+    --color-accent: #059669;
+    --shadow-main: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+}
+
+/* --- Universal Resets & Foundations --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* --- Layout Elements --- */
+.control-bar {
+    width: 100%;
+    max-width: 600px;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+}
+
+.brand .accent { color: var(--color-accent); }
+
+.icon-btn {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+.icon-btn:hover { background-color: var(--bg-card); }
+
+.app-container {
+    width: 100%;
+    max-width: 480px;
+    padding: 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.menu-card {
+    background-color: var(--bg-card);
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow-main);
+}
+
+.setting-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+}
+
+.styled-select {
+    background-color: var(--bg-box);
+    color: var(--text-primary);
+    border: 1px solid var(--text-muted);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    outline: none;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* --- Scoreboard Dashboard --- */
+.scoreboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+}
+
+.score-tile {
+    background-color: var(--bg-card);
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: var(--shadow-main);
+    border-bottom: 4px solid transparent;
+}
+#tile-x { border-color: var(--color-x); }
+#tile-o { border-color: var(--color-o); }
+#tile-ties { border-color: var(--text-muted); }
+
+.score-tile .label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.score-tile .score-val {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-top: 0.25rem;
+}
+
+/* --- Game Matrix Board Layout --- */
+.container {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 4%;
+    position: relative;
+}
+
+/* --- Responsive Tile Button Box --- */
+.box {
+    background-color: var(--bg-card);
+    border: none;
+    border-radius: 1rem;
+    font-size: 12vmin;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: var(--shadow-main);
+    transform: scale(1);
+    transition: transform 0.15s ease, background-color 0.2s ease;
+}
+
+@media (min-width: 480px) {
+    .box { font-size: 3.5rem; }
+}
+
+.box:hover:not(:disabled) {
+    background-color: var(--bg-box-hover);
+    transform: scale(1.03);
+}
+
+.box:active:not(:disabled) { transform: scale(0.97); }
+
+/* Marker State Enforcements */
+.box.x-placement { color: var(--color-x); animation: pop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.box.o-placement { color: var(--color-o); animation: pop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+
+@keyframes pop {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* --- Dynamic SVG Win Line Layer --- */
+.win-line-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+#strike-line {
+    stroke: var(--color-accent);
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    transition: stroke-dashoffset 0.4s ease-out;
+}
+
+/* --- Feedback Banners & Buttons --- */
+.msg-container {
+    background-color: var(--bg-card);
+    padding: 1rem;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow-main);
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    0% { transform: translateY(-10px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+#msg { font-weight: 700; font-size: 1.1rem; }
+
+.primary-btn, .secondary-btn {
+    padding: 0.6rem 1.2rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.primary-btn { background-color: var(--color-accent); color: white; }
+.primary-btn:hover { opacity: 0.9; }
+
+.secondary-btn { background-color: var(--bg-card); color: var(--text-primary); width: 100%; border: 1px solid var(--bg-box); }
+.secondary-btn:hover { background-color: var(--bg-box); }
+
+.hide { display: none !important; }
